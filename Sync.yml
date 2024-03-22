@@ -1,0 +1,34 @@
+name: Sharelatex Sync with Git
+on:
+  schedule:
+    - cron: "0 0/4 * * *"
+  workflow_dispatch:
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fetch the latest version from sharelatex server
+      uses: MaylonXGT/sharelatex_sync_with_git@master
+      with:
+        SHARELATEX_PROJECT_ID: ${{ secrets.SHARELATEX_PROJECT_ID }}
+        SHARELATEX_COOKIE: ${{ secrets.SHARELATEX_COOKIE }}
+
+    - name: Upload to Project Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: project
+        path: ./artifacts/
+
+    - uses: actions/checkout@v2
+      with:
+        path: repo/
+    
+    - run: |
+        cd repo/
+        cp -r ../artifacts/* ./
+        git config user.name "sharelatex Sync Bot"
+        git config user.email "actions@github.com"
+        git add .
+        if [[ $(git diff HEAD --stat) == '' ]]; then (echo 'Working tree is clean') 
+        else (git commit -m "Sync with sharelatex remote"  && git push) fi
