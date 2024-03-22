@@ -1,28 +1,28 @@
 # action.yml
-name: "Overleaf Sync with Git"
+name: "sharelatex Sync with Git"
 branding:
   icon: 'align-center'  
   color: 'yellow'
-description: "🤖 A GitHub action to take backups from OverLeaf which is an Online LaTeX Editor."
+description: "🤖 A GitHub action to take backups from sharelatex which is an Online LaTeX Editor."
 
 
 inputs:
   OVERLEAF_COOKIE: # id of input
-    description: "Active Cookie of overleaf account"
+    description: "Active Cookie of sharelatex account"
     required: true
   OVERLEAF_PROJECT_ID: # id of input
     description: "Id of the project you want the bot to take automatic snapshot"
     required: true
   OVERLEAF_HOST:
-    description: "Hostname of your Overleaf Instance, default is www.overleaf.com"
-    default: "www.overleaf.com"
+    description: "Hostname of your sharelatex Instance, default is sharelatex.cstcloud.cn"
+    default: "sharelatex.cstcloud.cn"
 
 
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.OVERLEAF_COOKIE }}
+    - ${{ inputs.sharelatex_COOKIE }}
     - ${{ inputs.OVERLEAF_PROJECT_ID }}
     - ${{ inputs.OVERLEAF_HOST }}
 
