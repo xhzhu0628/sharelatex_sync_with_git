@@ -7,13 +7,13 @@ description: "🤖 A GitHub action to take backups from sharelatex which is an O
 
 
 inputs:
-  OVERLEAF_COOKIE: # id of input
+  SHARELATEX_COOKIE: # id of input
     description: "Active Cookie of sharelatex account"
     required: true
-  OVERLEAF_PROJECT_ID: # id of input
+  SHARELATEX_PROJECT_ID: # id of input
     description: "Id of the project you want the bot to take automatic snapshot"
     required: true
-  OVERLEAF_HOST:
+  SHARELATEX_HOST:
     description: "Hostname of your sharelatex Instance, default is sharelatex.cstcloud.cn"
     default: "sharelatex.cstcloud.cn"
 
@@ -22,7 +22,7 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.sharelatex_COOKIE }}
-    - ${{ inputs.OVERLEAF_PROJECT_ID }}
-    - ${{ inputs.OVERLEAF_HOST }}
+    - ${{ inputs.SHARELATEX_COOKIE }}
+    - ${{ inputs.SHARELATEX_PROJECT_ID }}
+    - ${{ inputs.SHARELATEX_HOST }}
 
