@@ -8,5 +8,5 @@ RUN apk --no-cache add unzip
 
 COPY src/entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh", "tmp"]
+ENTRYPOINT ["/entrypoint.sh", "/tmp"]
 
