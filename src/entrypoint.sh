@@ -23,7 +23,7 @@ curl "https://$HOST/project/$PROJECT_ID/download/zip" \
   -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
   -H 'accept-language: en-US,en;q=0.9' \
   -H "Cookie: sharelatex.sid=$COOKIE" \
-  --output "$ZIP_OUTPUT_PATH" --create-dirs
+  -# --output "$ZIP_OUTPUT_PATH" --create-dirs
   
 if [ $? -eq 0 ]; then
   echo "--- Contents of /tmp before extraction ---"
