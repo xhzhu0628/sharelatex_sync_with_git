@@ -26,6 +26,8 @@ curl "https://$HOST/project/$PROJECT_ID/download/zip" \
   --output "$ZIP_OUTPUT_PATH" --create-dirs
   
 if [ $? -eq 0 ]; then
+  echo "--- Contents of /tmp before extraction ---"
+  ls -l /tmp
   echo "Extracting all files at $EXTRACTED_FILES_PATH"
 
   unzip -o "$ZIP_OUTPUT_PATH" -d "$EXTRACTED_FILES_PATH"
