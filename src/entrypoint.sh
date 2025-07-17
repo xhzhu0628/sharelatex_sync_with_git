@@ -13,6 +13,7 @@ COOKIE=$(echo "$INPUT_SHARELATEX_COOKIE" | sed 's/.*=//g')
 HOST="$INPUT_SHARELATEX_HOST"
 
 echo "Dumping zip file at $ZIP_OUTPUT_PATH"
+echo "download the zip file from https://$HOST/project/$PROJECT_ID/download/zip"
 
 curl "https://$HOST/project/$PROJECT_ID/download/zip" \
   -H "authority: $HOST" \
@@ -23,9 +24,15 @@ curl "https://$HOST/project/$PROJECT_ID/download/zip" \
   -H 'accept-language: en-US,en;q=0.9' \
   -H "Cookie: sharelatex.sid=$COOKIE" \
   --output "$ZIP_OUTPUT_PATH" --create-dirs
+  
+if [ $? -eq 0 ]; then
+  echo "Extracting all files at $EXTRACTED_FILES_PATH"
 
-echo "Extracting all files at $EXTRACTED_FILES_PATH"
-
-unzip -o "$ZIP_OUTPUT_PATH" -d "$EXTRACTED_FILES_PATH"
+  unzip -o "$ZIP_OUTPUT_PATH" -d "$EXTRACTED_FILES_PATH"
+else
+  echo "Error: Failed to download the zip file from https://$HOST/project/$PROJECT_ID/download/zip"
+  echo "Curl exit code: $?"
+  exit 1
+fi
 
 
