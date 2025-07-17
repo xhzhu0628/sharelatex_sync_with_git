@@ -30,10 +30,19 @@ touch "${1}/text_file"
 if [ $? -eq 0 ]; then
   echo "Curl exit code: $?"
   echo "--- Contents of ${1} before extraction ---"
-  ls "${1}"
+  ls -l "${1}"
   echo "------------------------------------------"
   echo "Extracting all files from $ZIP_OUTPUT_PATH to $EXTRACTED_FILES_PATH"
+  if [ -f "$ZIP_OUTPUT_PATH" ]; then
+    echo "$ZIP_OUTPUT_PATH exists."
+  else
+    echo "ERROR: $ZIP_OUTPUT_PATH does NOT exist or is not a regular file after download."
+    exit 1
+  fi
 
+  echo "--- Checking file type of $ZIP_OUTPUT_PATH ---"
+  file "$ZIP_OUTPUT_PATH"
+  echo "---------------------------------------------------"
   unzip -o "$ZIP_OUTPUT_PATH" -d "$EXTRACTED_FILES_PATH"
 else
   echo "Error: Failed to download the zip file from https://$HOST/project/$PROJECT_ID/download/zip"
