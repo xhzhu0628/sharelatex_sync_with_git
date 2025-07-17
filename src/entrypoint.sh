@@ -16,14 +16,14 @@ echo "Dumping zip file at $ZIP_OUTPUT_PATH"
 echo "download the zip file from https://$HOST/project/$PROJECT_ID/download/zip"
 
 
-curl -sS --fail "https://$HOST/project/$PROJECT_ID/download/zip" \
+curl "https://$HOST/project/$PROJECT_ID/download/zip" \
   -H "authority: $HOST" \
   -H 'pragma: no-cache' \
   -H 'cache-control: no-cache' \
   -H 'upgrade-insecure-requests: 1' \
   -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
   -H 'accept-language: en-US,en;q=0.9' \
-  -H "Cookie: sharelatex.sid=$COOKIE" \
+  -H "Cookie: overleaf.sid=$COOKIE" \
   --output "$ZIP_OUTPUT_PATH" --create-dirs --progress-bar
 
 touch "${1}/text_file"
@@ -39,10 +39,7 @@ if [ $? -eq 0 ]; then
     echo "ERROR: $ZIP_OUTPUT_PATH does NOT exist or is not a regular file after download."
     exit 1
   fi
-
-  echo "--- Checking file type of $ZIP_OUTPUT_PATH ---"
-  file "$ZIP_OUTPUT_PATH"
-  echo "---------------------------------------------------"
+  
   unzip -o "$ZIP_OUTPUT_PATH" -d "$EXTRACTED_FILES_PATH"
 else
   echo "Error: Failed to download the zip file from https://$HOST/project/$PROJECT_ID/download/zip"
